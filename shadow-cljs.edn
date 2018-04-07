@@ -1,0 +1,25 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src"]
+
+ :resource-paths ["resources"]
+
+ :dependencies
+ [[binaryage/devtools "0.9.4"]]
+
+ :nrepl {:port 7001}
+
+ :builds
+ {:app   {:target :browser
+          :output-dir "resources/public/js"
+          :asset-path "/js"
+          :modules {:main {:entries [t.core]}}
+          :compiler-options
+          {:closure-defines {}
+           :external-config {:devtools/config {:features-to-install [:formatters :hints]}}}
+          :devtools
+          {:http-root "resources/public"
+           :http-port 8021
+           :after-load t.core/on-js-reload
+           :preloads [devtools.preload shadow.cljs.devtools.client.hud]
+           :autoload true}}}}
